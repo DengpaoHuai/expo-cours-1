@@ -1,11 +1,12 @@
-import { Button, StyleSheet } from "react-native";
+import { Button, ButtonProps, StyleSheet } from "react-native";
 
-const CustomButton = () => {
+const CustomButton = ({ title, onPress, disabled }: ButtonProps) => {
   return (
     <Button
-      title="Click me"
+      title={title}
       color={styles.button.backgroundColor}
-      onPress={() => alert("Button pressed")}
+      onPress={onPress}
+      disabled={disabled}
     />
   );
 };

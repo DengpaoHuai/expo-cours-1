@@ -1,8 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react"; //hook
+import CustomButton from "./components/CustomButton";
+import PlanetCard from "./components/PlanetCard";
 
-type Planet = {
+export type Planet = {
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -27,35 +29,42 @@ type PlanetsResponse = {
 };
 
 export default function App() {
-  const [planets, setPlanets] = useState<Planet[]>([]);
+  const [planetsResponse, setPlanetsResponse] = useState<PlanetsResponse>({
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+  });
+
+  const getData = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setPlanetsResponse(data);
+  };
 
   useEffect(() => {
-    fetch("https://swapi.dev/api/planets")
-      .then((response) => response.json())
-      .then((data) => {
-        setPlanets(data.results);
-        console.log(data.results);
-      });
+    getData("https://swapi.dev/api/planets");
   }, []);
 
   return (
     <View style={styles.container}>
       <Text>Planets</Text>
-      {planets.map((planet) => (
-        <Text key={planet.name}>{planet.name}</Text>
+      <Text>{planetsResponse.count}</Text>
+      {planetsResponse.results.map((planet) => (
+        <PlanetCard key={planet.name} planet={planet}>
+          <Text>Hello</Text>
+        </PlanetCard>
       ))}
       <View style={{ flexDirection: "row", gap: 10 }}>
-        <Button
+        <CustomButton
           title="prev"
-          onPress={() => {
-            console.log("prev");
-          }}
+          disabled={!planetsResponse.previous}
+          onPress={() => getData(planetsResponse.previous!)}
         />
         <Button
           title="next"
-          onPress={() => {
-            console.log("next");
-          }}
+          disabled={!planetsResponse.next}
+          onPress={() => planetsResponse.next && getData(planetsResponse.next)}
         />
       </View>
 
