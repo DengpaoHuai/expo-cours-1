@@ -1,108 +1,40 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-
-type FormData = {
-  name: string;
-  type: string;
-  color: string;
-  size: string;
-};
+import { View, Text, Button, StyleSheet } from "react-native";
+import { useForm } from "react-hook-form";
+import CustomTextInput from "../components/inputs/CustomTextInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  MinecraftAnimalFormSchema,
+  MinecraftAnimalForm,
+} from "../schemas/minecraft.schema";
 
 const CreateMinecraftAnimal = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: {
-      name: "",
-      type: "",
-      color: "",
-      size: "",
-    },
+  const { control, handleSubmit } = useForm<MinecraftAnimalForm>({
+    resolver: zodResolver(MinecraftAnimalFormSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: MinecraftAnimalForm) => {
+    //https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab
+    const response = await fetch(
+      "https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab/animals",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const json = await response.json();
+    console.log(json);
   };
 
   return (
     <View style={styles.container}>
       <Text>Create Minecraft Animal</Text>
-
-      <Controller
-        control={control}
-        rules={{ required: "Le nom est requis" }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="name"
-      />
-      {errors.name && (
-        <Text style={styles.errorText}>{errors.name.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        rules={{ required: "Le type est requis" }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Type"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="type"
-      />
-      {errors.type && (
-        <Text style={styles.errorText}>{errors.type.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        rules={{ required: "La couleur est requise" }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Color"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="color"
-      />
-      {errors.color && (
-        <Text style={styles.errorText}>{errors.color.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        rules={{ required: "La taille est requise" }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Size"
-            keyboardType="numeric"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="size"
-      />
-      {errors.size && (
-        <Text style={styles.errorText}>{errors.size.message}</Text>
-      )}
-
+      <CustomTextInput control={control} name="name" placeholder="Name" />
+      <CustomTextInput control={control} name="type" placeholder="Type" />
+      <CustomTextInput control={control} name="color" placeholder="Color" />
+      <CustomTextInput control={control} name="size" placeholder="Size" />
       <Button title="Create" onPress={handleSubmit(onSubmit)} />
     </View>
   );
@@ -114,17 +46,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    margin: 10,
-  },
-  errorText: {
-    color: "red",
-    marginLeft: 10,
-    marginTop: -5,
   },
 });
