@@ -1,4 +1,6 @@
-import toto, { toto1 } from "./demo";
+import toto, { 
+    
+ } from "./demo";
 
 
 console.log(toto)
