@@ -20,4 +20,6 @@ export const MinecraftAnimalFormSchema = z.object({
     .regex(/^\d+$/, "La taille doit être un nombre"),
 });
 
-export type MinecraftAnimalForm = z.infer<typeof MinecraftAnimalFormSchema>;
+export type MinecraftAnimalForm = z.infer<typeof MinecraftAnimalFormSchema> & {
+  _id: string;
+};

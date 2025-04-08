@@ -6,13 +6,17 @@ import {
   MinecraftAnimalFormSchema,
   MinecraftAnimalForm,
 } from "../schemas/minecraft.schema";
+import { useNavigation } from "@react-navigation/native";
 
 const CreateMinecraftAnimal = () => {
-  const { control, handleSubmit } = useForm<MinecraftAnimalForm>({
+  const { control, handleSubmit } = useForm<Omit<MinecraftAnimalForm, "_id">>({
     resolver: zodResolver(MinecraftAnimalFormSchema),
   });
+  const navigation = useNavigation();
 
-  const onSubmit = async (data: MinecraftAnimalForm) => {
+  console.log(navigation.getState());
+
+  const onSubmit = async (data: Omit<MinecraftAnimalForm, "_id">) => {
     //https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab
     const response = await fetch(
       "https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab/animals",
@@ -26,6 +30,7 @@ const CreateMinecraftAnimal = () => {
     );
     const json = await response.json();
     console.log(json);
+    navigation.goBack();
   };
 
   return (

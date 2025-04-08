@@ -3,7 +3,21 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "../screens/HomeScreen";
 import PlanetsScreen from "../screens/PlanetList";
 import CreateMinecraftAnimal from "../screens/CreateMinecraftAnimal";
-const Stack = createStackNavigator();
+import ListAnimals from "../screens/ListAnimals";
+import DisplayAnimal from "../screens/DisplayAnimal";
+import { MinecraftAnimalForm } from "../schemas/minecraft.schema";
+import CounterScreen from "../screens/CounterScreen";
+
+export type RootStackParamList = {
+  Home: undefined;
+  Planets: undefined;
+  ListAnimals: undefined;
+  DisplayAnimal: { animal: MinecraftAnimalForm };
+  CreateMinecraftAnimal: undefined;
+  Counter: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const AppRouter = () => {
   return (
@@ -15,6 +29,9 @@ const AppRouter = () => {
           name="CreateMinecraftAnimal"
           component={CreateMinecraftAnimal}
         />
+        <Stack.Screen name="ListAnimals" component={ListAnimals} />
+        <Stack.Screen name="DisplayAnimal" component={DisplayAnimal} />
+        <Stack.Screen name="Counter" component={CounterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
