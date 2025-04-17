@@ -1,10 +1,25 @@
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  CameraView,
+  CameraType,
+  useCameraPermissions,
+  CameraCapturedPicture,
+} from "expo-camera";
+import { useRef, useState } from "react";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default function CameraPage() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
+  const cameraRef = useRef<CameraView>(null);
+  const [picture, setPicture] = useState<CameraCapturedPicture | null>(null);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -27,15 +42,50 @@ export default function CameraPage() {
     setFacing((current) => (current === "back" ? "front" : "back"));
   }
 
+  const takePicture = async () => {
+    const picture = await cameraRef.current?.takePictureAsync();
+    console.log(picture);
+    setPicture(picture?.uri);
+    const height = picture?.height;
+    const width = picture?.width;
+    const context = ImageManipulator.ImageManipulator.manipulate(picture?.uri!);
+    console.log("context");
+    console.log(context);
+    context.flip(ImageManipulator.FlipType.Horizontal);
+    context.resize({
+      width: 1500,
+    });
+    const result = await context.renderAsync();
+
+    console.log("result");
+    console.log(result);
+    const uri = await result.saveAsync({
+      format: ImageManipulator.SaveFormat.JPEG,
+      compress: 0.8,
+    });
+    console.log("uri");
+    console.log(uri);
+  };
+
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </CameraView>
+      {picture ? (
+        <Image source={{ uri: picture }} style={styles.picture} />
+      ) : (
+        <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={toggleCameraFacing}
+            >
+              <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
+              <Text style={styles.text}>Take Picture</Text>
+            </TouchableOpacity>
+          </View>
+        </CameraView>
+      )}
     </View>
   );
 }
@@ -67,5 +117,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "white",
+  },
+  picture: {
+    width: "100%",
+    height: "100%",
   },
 });

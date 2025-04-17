@@ -9,6 +9,7 @@ import { MinecraftAnimalForm } from "../schemas/minecraft.schema";
 import CounterScreen from "../screens/CounterScreen";
 import PlanetLisQuery from "../screens/PlanetLisQuery";
 import CameraPage from "../screens/CameraView";
+import BarCode from "../screens/BarCode";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   Counter: undefined;
   PlanetLisQuery: undefined;
   CameraPage: undefined;
+  BarCode: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -38,6 +40,7 @@ const AppRouter = () => {
         <Stack.Screen name="Counter" component={CounterScreen} />
         <Stack.Screen name="PlanetLisQuery" component={PlanetLisQuery} />
         <Stack.Screen name="CameraPage" component={CameraPage} />
+        <Stack.Screen name="BarCode" component={BarCode} />
       </Stack.Navigator>
     </NavigationContainer>
   );

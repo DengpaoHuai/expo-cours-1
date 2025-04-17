@@ -32,6 +32,10 @@ const HomeScreen = () => {
         title="Go to Camera"
         onPress={() => navigation.navigate("CameraPage")}
       />
+      <Button
+        title="Go to BarCode"
+        onPress={() => navigation.navigate("BarCode")}
+      />
     </View>
   );
 };
