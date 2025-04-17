@@ -28,6 +28,10 @@ const HomeScreen = () => {
         title="Go to PlanetLisQuery"
         onPress={() => navigation.navigate("PlanetLisQuery")}
       />
+      <Button
+        title="Go to Camera"
+        onPress={() => navigation.navigate("CameraPage")}
+      />
     </View>
   );
 };
