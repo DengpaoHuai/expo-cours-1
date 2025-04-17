@@ -1,14 +1,12 @@
-import { Provider } from "mobx-react";
-import { CounterStoreProvider } from "./contexts/CounterStoreContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppRouter from "./router";
-import CounterStore from "./stores/counter.store";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <Provider CounterStore={CounterStore}>
-      <CounterStoreProvider>
-        <AppRouter />
-      </CounterStoreProvider>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <AppRouter />
+    </QueryClientProvider>
   );
 }

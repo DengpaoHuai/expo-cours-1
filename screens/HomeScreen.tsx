@@ -23,6 +23,11 @@ const HomeScreen = () => {
         title="Go to Counter"
         onPress={() => navigation.navigate("Counter")}
       />
+
+      <Button
+        title="Go to PlanetLisQuery"
+        onPress={() => navigation.navigate("PlanetLisQuery")}
+      />
     </View>
   );
 };

@@ -19,7 +19,7 @@ const CreateMinecraftAnimal = () => {
   const onSubmit = async (data: Omit<MinecraftAnimalForm, "_id">) => {
     //https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab
     const response = await fetch(
-      "https://crudcrud.com/api/c5e35222b2b949258555b33e4143b7ab/animals",
+      "https://crudcrud.com/api/acd9d88f28a14a9baa404044703009a4/animals",
       {
         method: "POST",
         body: JSON.stringify(data),

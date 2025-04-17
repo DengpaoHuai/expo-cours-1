@@ -7,6 +7,7 @@ import ListAnimals from "../screens/ListAnimals";
 import DisplayAnimal from "../screens/DisplayAnimal";
 import { MinecraftAnimalForm } from "../schemas/minecraft.schema";
 import CounterScreen from "../screens/CounterScreen";
+import PlanetLisQuery from "../screens/PlanetLisQuery";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   DisplayAnimal: { animal: MinecraftAnimalForm };
   CreateMinecraftAnimal: undefined;
   Counter: undefined;
+  PlanetLisQuery: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -32,6 +34,7 @@ const AppRouter = () => {
         <Stack.Screen name="ListAnimals" component={ListAnimals} />
         <Stack.Screen name="DisplayAnimal" component={DisplayAnimal} />
         <Stack.Screen name="Counter" component={CounterScreen} />
+        <Stack.Screen name="PlanetLisQuery" component={PlanetLisQuery} />
       </Stack.Navigator>
     </NavigationContainer>
   );
