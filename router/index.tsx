@@ -6,10 +6,11 @@ import CreateMinecraftAnimal from "../screens/CreateMinecraftAnimal";
 import ListAnimals from "../screens/ListAnimals";
 import DisplayAnimal from "../screens/DisplayAnimal";
 import { MinecraftAnimalForm } from "../schemas/minecraft.schema";
-import CounterScreen from "../screens/CounterScreen";
+import CounterScreen from "../screens/CounterScreen2";
 import PlanetLisQuery from "../screens/PlanetLisQuery";
 import CameraPage from "../screens/CameraView";
 import BarCode from "../screens/BarCode";
+import LoginScreen from "../screens/LoginScreen";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   PlanetLisQuery: undefined;
   CameraPage: undefined;
   BarCode: undefined;
+  Login: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -41,6 +43,7 @@ const AppRouter = () => {
         <Stack.Screen name="PlanetLisQuery" component={PlanetLisQuery} />
         <Stack.Screen name="CameraPage" component={CameraPage} />
         <Stack.Screen name="BarCode" component={BarCode} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

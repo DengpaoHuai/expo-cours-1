@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.3.9",
     "@react-navigation/drawer": "^7.3.8",
     "@react-navigation/native": "^7.1.5",
@@ -20,6 +21,7 @@
     "expo-camera": "~16.0.18",
     "expo-image-manipulator": "~13.0.6",
     "expo-linear-gradient": "^14.0.2",
+    "expo-local-authentication": "~15.0.2",
     "expo-status-bar": "~2.0.1",
     "mobx": "^6.13.7",
     "mobx-react": "^9.2.0",

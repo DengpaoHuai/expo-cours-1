@@ -36,6 +36,10 @@ const HomeScreen = () => {
         title="Go to BarCode"
         onPress={() => navigation.navigate("BarCode")}
       />
+      <Button
+        title="Go to Login"
+        onPress={() => navigation.navigate("Login")}
+      />
     </View>
   );
 };
